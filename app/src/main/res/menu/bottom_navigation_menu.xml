@@ -8,10 +8,10 @@
         android:title="@string/ic_home"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/tracksFragment"
-        android:icon="@drawable/ic_tracks"
+        android:id="@+id/routesFragment"
+        android:icon="@drawable/ic_routes"
         android:orderInCategory="2"
-        android:title="@string/ic_tracks"
+        android:title="@string/ic_routes"
         app:showAsAction="ifRoom" />
 
     <item

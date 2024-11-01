@@ -6,14 +6,69 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:text="home"/>
+    <org.osmdroid.views.MapView
+        android:id="@+id/map"
+        android:layout_width="@dimen/dm_0"
+        android:layout_height="@dimen/dm_0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_current_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dm_10"
+        android:layout_marginEnd="@dimen/dm_10"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/btn_my_location"
+        android:src="@drawable/ic_location"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btn_start_stop"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dm_10"
+        android:backgroundTint="@color/white"
+        android:contentDescription="@string/btn_control_route"
+        android:src="@drawable/btn_start"
+        app:layout_constraintStart_toStartOf="@+id/btn_current_location"
+        app:layout_constraintTop_toBottomOf="@+id/btn_current_location" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        style="@style/FieldTexStyle"
+        android:layout_marginStart="@dimen/dm_10"
+        android:layout_marginTop="@dimen/dm_10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Time: 00:00:00" />
+
+    <TextView
+        android:id="@+id/tv_average_speed"
+        style="@style/FieldTexStyle"
+        app:layout_constraintStart_toStartOf="@+id/tv_time"
+        app:layout_constraintTop_toBottomOf="@+id/tv_time"
+        tools:text="Average speed: 3.5 km/h" />
+
+    <TextView
+        android:id="@+id/tv_speed"
+        style="@style/FieldTexStyle"
+        app:layout_constraintStart_toStartOf="@+id/tv_average_speed"
+        app:layout_constraintTop_toBottomOf="@+id/tv_average_speed"
+        tools:text="Speed: 4 km/h" />
+
+    <TextView
+        android:id="@+id/tv_distance"
+        style="@style/FieldTexStyle"
+        android:layout_marginTop="@dimen/dm_15"
+        android:textSize="@dimen/sp_24"
+        app:layout_constraintStart_toStartOf="@+id/tv_speed"
+        app:layout_constraintTop_toBottomOf="@+id/tv_speed"
+        tools:text="Distance: 15 km" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

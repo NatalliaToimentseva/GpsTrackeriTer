@@ -55,4 +55,12 @@ dependencies {
 
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
+
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
+
+    implementation("org.osmdroid:osmdroid-android:6.1.10")
+    implementation("com.github.MKergall:osmbonuspack:6.7.0")
+
+
 }

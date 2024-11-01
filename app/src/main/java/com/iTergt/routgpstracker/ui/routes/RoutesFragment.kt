@@ -1,21 +1,21 @@
-package com.iTergt.routgpstracker.ui.tracks
+package com.iTergt.routgpstracker.ui.routes
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.iTergt.routgpstracker.databinding.FragmentTracksBinding
+import com.iTergt.routgpstracker.databinding.FragmentRoutesBinding
 
-class TracksFragment : Fragment() {
+class RoutesFragment : Fragment() {
 
-    private var binding: FragmentTracksBinding? = null
+    private var binding: FragmentRoutesBinding? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTracksBinding.inflate(inflater, container, false)
+        binding = FragmentRoutesBinding.inflate(inflater, container, false)
         return binding?.root
     }
 

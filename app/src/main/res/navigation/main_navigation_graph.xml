@@ -11,10 +11,10 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" />
     <fragment
-        android:id="@+id/tracksFragment"
-        android:name="com.iTergt.routgpstracker.ui.tracks.TracksFragment"
+        android:id="@+id/routesFragment"
+        android:name="com.iTergt.routgpstracker.ui.routes.RoutesFragment"
         android:label="fragment_tracks"
-        tools:layout="@layout/fragment_tracks" />
+        tools:layout="@layout/fragment_routes" />
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.iTergt.routgpstracker.ui.settings.SettingsFragment"
