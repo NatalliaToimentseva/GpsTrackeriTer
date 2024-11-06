@@ -13,19 +13,24 @@ class LocationService : Service() {
 
     override fun onBind(intent: Intent?): IBinder? = null
 
-    override fun onCreate() {
-        super.onCreate()
-    }
-
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startForeground(
             NOTIFICATION_ID,
             notificationManager.buildNotification()
         )
+        isRunning = true
+        startTime = System.currentTimeMillis()
         return START_STICKY
     }
 
     override fun onDestroy() {
         super.onDestroy()
+        isRunning = false
+        startTime = 0L
+    }
+
+    companion object {
+        var isRunning = false
+        var startTime = 0L
     }
 }

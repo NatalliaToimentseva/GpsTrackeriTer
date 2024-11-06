@@ -19,5 +19,6 @@
     <string name="snackbar_gps_action">Open settings</string>
     <string name="btn_my_location">Current location</string>
     <string name="btn_control_route">Control route</string>
+    <string name="tv_timer">Time: %1$s</string>
 
 </resources>

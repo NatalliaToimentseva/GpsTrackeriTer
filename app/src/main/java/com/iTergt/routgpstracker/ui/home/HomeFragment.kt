@@ -52,14 +52,19 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestPermission()
-        requireContext().startForegroundService(
-            Intent(
-                requireContext(),
-                LocationService::class.java
-            )
-        )
         if (!isInternetConnection()) {
             binding?.map?.snackbar(resources.getString(R.string.check_internet_message))
+        }
+        checkServiceState()
+        viewModel.timePassed.observe(viewLifecycleOwner) { time ->
+            binding?.tvTime?.text = resources.getString(R.string.tv_timer, time)
+        }
+        binding?.btnStartStop?.setOnClickListener {
+            if (viewModel.isServiceRunning.value == false) {
+                startLocationService()
+            } else {
+                stopLocationService()
+            }
         }
     }
 
@@ -150,5 +155,32 @@ class HomeFragment : Fragment() {
             .setNegativeButton(getString(R.string.negative_button)) { _, _ -> }
             .create()
             .show()
+    }
+
+    private fun startLocationService() {
+        requireContext().startForegroundService(
+            Intent(
+                requireContext(),
+                LocationService::class.java
+            )
+        )
+        viewModel.setIsServiceRunning(true)
+        viewModel.startTimer()
+        binding?.btnStartStop?.setImageResource(R.drawable.btn_stop)
+    }
+
+    private fun stopLocationService() {
+        viewModel.setIsServiceRunning(false)
+        viewModel.stopTimer()
+        binding?.btnStartStop?.setImageResource(R.drawable.btn_start)
+        requireContext().stopService(Intent(requireContext(), LocationService::class.java))
+    }
+
+    private fun checkServiceState() {
+        if (LocationService.isRunning) {
+            viewModel.setIsServiceRunning(true)
+            viewModel.startTimer()
+            binding?.btnStartStop?.setImageResource(R.drawable.btn_stop)
+        }
     }
 }
