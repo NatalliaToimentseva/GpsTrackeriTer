@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.7.2"
 koinCore = "4.0.0"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
@@ -15,6 +15,7 @@ navigationUiKtx = "2.8.3"
 navigationSafeArgsGradlePlugin = "2.8.3"
 preferenceKtx = "1.2.1"
 preference = "1.2.1"
+playServicesLocation = "21.3.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,7 @@ androidx-navigation-fragment-ktx = { group = "androidx.navigation", name = "navi
 androidx-navigation-ui-ktx = { group = "androidx.navigation", name = "navigation-ui-ktx", version.ref = "navigationUiKtx" }
 androidx-navigation-safe-args-gradle-plugin = { module = "androidx.navigation:navigation-safe-args-gradle-plugin", version.ref = "navigationSafeArgsGradlePlugin" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

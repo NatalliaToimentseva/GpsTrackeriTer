@@ -59,8 +59,12 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
 
+    implementation(libs.play.services.location)
+
     implementation("org.osmdroid:osmdroid-android:6.1.10")
     implementation("com.github.MKergall:osmbonuspack:6.7.0")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation("io.reactivex.rxjava3:rxjava:3.1.5")
 
 
 }

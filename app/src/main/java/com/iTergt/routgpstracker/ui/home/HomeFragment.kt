@@ -15,13 +15,13 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iTergt.routgpstracker.R
 import com.iTergt.routgpstracker.databinding.FragmentHomeBinding
 import com.iTergt.routgpstracker.service.LocationService
 import com.iTergt.routgpstracker.utils.snackbar
 import com.iTergt.routgpstracker.utils.snackbarWithListener
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.osmdroid.config.Configuration
 import org.osmdroid.library.BuildConfig
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
@@ -36,7 +36,7 @@ class HomeFragment : Fragment() {
         Manifest.permission.ACCESS_FINE_LOCATION,
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
-    private val viewModel: HomeViewModel by viewModels()
+    private val viewModel: HomeViewModel by viewModel()
     private var pLauncher: ActivityResultLauncher<Array<String>>? = null
     private var binding: FragmentHomeBinding? = null
 
