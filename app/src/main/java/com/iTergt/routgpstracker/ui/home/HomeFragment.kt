@@ -1,7 +1,6 @@
 package com.iTergt.routgpstracker.ui.home
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -13,6 +12,7 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
@@ -33,9 +33,6 @@ import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 private const val OSM_MAP_PREFERENCES = "osm_pref"
 private const val SCHEME = "package"
-private const val FORMAT = "%.1f"
-private const val MLS_IN_SEC = 1000.0f
-private const val COEF_TO_KM_H = 3.6f
 
 class HomeFragment : Fragment() {
 
@@ -57,7 +54,6 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
-    @SuppressLint("DefaultLocale")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestPermission()
@@ -69,21 +65,21 @@ class HomeFragment : Fragment() {
             binding?.tvTime?.text = resources.getString(R.string.tv_timer, time)
         }
         viewModel.locationData.observe(viewLifecycleOwner) { location ->
-            val distanceFormated = String.format(FORMAT, location.distance)
-            val speedFormated = String.format(FORMAT, COEF_TO_KM_H * location.speed)
-            val averageSpeedFormated = String.format(
-                FORMAT,
-                COEF_TO_KM_H * (location.distance / ((System.currentTimeMillis() - LocationService.startTime) / MLS_IN_SEC))
-            )
             binding?.run {
-                tvDistance.text = resources.getString(R.string.tv_distance, distanceFormated)
-                tvSpeed.text = resources.getString(R.string.tv_speed, speedFormated)
+                tvDistance.text = resources.getString(R.string.tv_distance, location.distance)
+                tvSpeed.text = resources.getString(R.string.tv_speed, location.speed)
                 tvAverageSpeed.text =
-                    resources.getString(R.string.tv_averageSpeed, averageSpeedFormated)
+                    resources.getString(R.string.tv_averageSpeed, location.averageSpeed)
             }
             if (viewModel.isMapInitialized.value == true) {
                 updatePolyline(location.geoPointsList)
             }
+        }
+        viewModel.isShowDialog.observe(viewLifecycleOwner) { isShow ->
+            if (isShow) {
+                showSaveRouteDialog()
+            }
+
         }
         binding?.btnStartStop?.setOnClickListener {
             if (viewModel.isServiceRunning.value == false) {
@@ -145,9 +141,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun drawAllPoints(list: List<GeoPoint>) {
-            list.forEach { point ->
-                polyline?.addPoint(point)
-            }
+        list.forEach { point ->
+            polyline?.addPoint(point)
+        }
     }
 
     private fun updatePolyline(list: List<GeoPoint>) {
@@ -234,7 +230,35 @@ class HomeFragment : Fragment() {
         viewModel.stopTimer()
         binding?.btnStartStop?.setImageResource(R.drawable.btn_start)
         requireContext().stopService(Intent(requireContext(), LocationService::class.java))
+        viewModel.setShowDialog(true)
         polyline?.setPoints(arrayListOf())
+    }
+
+    private fun showSaveRouteDialog() {
+        val averageSped =
+            viewModel.locationData.value?.averageSpeed ?: resources.getString(R.string.start_averageSpeed)
+        val distance =
+            viewModel.locationData.value?.distance ?: resources.getString(R.string.start_distance)
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(resources.getString(R.string.save_route_dialog_title))
+            .setMessage(
+                resources.getString(
+                    R.string.save_route_dialog_message,
+                    viewModel.timePassed.value,
+                    averageSped,
+                    distance
+                )
+            )
+            .setPositiveButton(getString(R.string.positive_button)) { _, _ ->
+                Toast.makeText(requireContext(), "Save", Toast.LENGTH_LONG).show()
+                viewModel.setShowDialog(false)
+            }
+            .setNegativeButton(getString(R.string.negative_button)) { _, _ ->
+                viewModel.setShowDialog(false)
+            }
+            .setOnDismissListener { viewModel.setShowDialog(false) }
+            .create()
+            .show()
     }
 
     private fun checkServiceState() {

@@ -1,6 +1,7 @@
 package com.iTergt.routgpstracker.service
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,6 +21,10 @@ import org.koin.android.ext.android.inject
 import org.osmdroid.util.GeoPoint
 
 private const val NOTIFICATION_ID = 1
+private const val FORMAT = "%.1f"
+private const val MLS_IN_SEC = 1000.0f
+private const val COEF_TO_KM_H = 3.6f
+private const val START_DISTANCE = 0.0f
 
 class LocationService : Service() {
 
@@ -29,7 +34,7 @@ class LocationService : Service() {
     private var locationRequest: LocationRequest? = null
     private var locationCallback: LocationCallback? = null
     private var lastLocation: Location? = null
-    private var distance = 0.0f
+    private var distance = START_DISTANCE
     private val geoPoints: ArrayList<GeoPoint> = arrayListOf()
 
     override fun onBind(intent: Intent?): IBinder? = null
@@ -64,6 +69,7 @@ class LocationService : Service() {
             .build()
         locationCallback = object : LocationCallback() {
 
+            @SuppressLint("DefaultLocale")
             override fun onLocationResult(result: LocationResult) {
                 super.onLocationResult(result)
                 if (lastLocation != null) {
@@ -73,9 +79,16 @@ class LocationService : Service() {
                             distance += distanceTo(location)
                         }
                         geoPoints.add(GeoPoint(location.latitude, location.longitude))
+                        val distanceFormated = String.format(FORMAT, distance)
+                        val speedFormated = String.format(FORMAT, COEF_TO_KM_H * location.speed)
+                        val averageSpeedFormated = String.format(
+                            FORMAT,
+                            COEF_TO_KM_H * (distance / ((System.currentTimeMillis() - LocationService.startTime) / MLS_IN_SEC))
+                        )
                         val locationModel = LocationModel(
-                            location.speed,
-                            distance,
+                            speedFormated,
+                            averageSpeedFormated,
+                            distanceFormated,
                             geoPoints
                         )
                         locationController.locationData.onNext(locationModel)

@@ -3,7 +3,8 @@ package com.iTergt.routgpstracker.models
 import org.osmdroid.util.GeoPoint
 
 data class LocationModel(
-    val speed: Float = 0.0f,
-    val distance: Float = 0.0f,
+    val speed: String,
+    val averageSpeed:String,
+    val distance: String,
     val geoPointsList: ArrayList<GeoPoint>
 )

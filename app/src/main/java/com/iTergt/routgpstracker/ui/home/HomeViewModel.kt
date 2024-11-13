@@ -35,6 +35,9 @@ class HomeViewModel(locationController: LocationController) : ViewModel() {
     private val _isFirstStart: MutableLiveData<Boolean> = MutableLiveData(true)
     val isFirstStart: LiveData<Boolean> = _isFirstStart
 
+    private val _isShowDialog: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isShowDialog: LiveData<Boolean> = _isShowDialog
+
     private val disposable = CompositeDisposable()
     private var timer: Timer? = null
 
@@ -66,6 +69,10 @@ class HomeViewModel(locationController: LocationController) : ViewModel() {
 
     fun setIsFirstStart(isFirst: Boolean) {
         _isFirstStart.value = isFirst
+    }
+
+    fun setShowDialog(isShow: Boolean) {
+        _isShowDialog.value = isShow
     }
 
     fun startTimer() {
