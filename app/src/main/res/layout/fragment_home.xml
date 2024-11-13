@@ -43,32 +43,32 @@
         style="@style/FieldTexStyle"
         android:layout_marginStart="@dimen/dm_10"
         android:layout_marginTop="@dimen/dm_10"
+        android:text="@string/start_timer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Time: 00:00:00" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_average_speed"
         style="@style/FieldTexStyle"
+        android:text="@string/start_averageSpeed"
         app:layout_constraintStart_toStartOf="@+id/tv_time"
-        app:layout_constraintTop_toBottomOf="@+id/tv_time"
-        tools:text="Average speed: 3.5 km/h" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_time" />
 
     <TextView
         android:id="@+id/tv_speed"
         style="@style/FieldTexStyle"
+        android:text="@string/start_speed"
         app:layout_constraintStart_toStartOf="@+id/tv_average_speed"
-        app:layout_constraintTop_toBottomOf="@+id/tv_average_speed"
-        tools:text="Speed: 4 km/h" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_average_speed" />
 
     <TextView
         android:id="@+id/tv_distance"
         style="@style/FieldTexStyle"
         android:layout_marginTop="@dimen/dm_15"
+        android:text="@string/start_distance"
         android:textSize="@dimen/sp_24"
         app:layout_constraintStart_toStartOf="@+id/tv_speed"
-        app:layout_constraintTop_toBottomOf="@+id/tv_speed"
-        tools:text="Distance: 15 km" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_speed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

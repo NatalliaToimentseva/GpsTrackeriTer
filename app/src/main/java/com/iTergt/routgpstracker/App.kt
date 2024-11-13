@@ -3,6 +3,7 @@ package com.iTergt.routgpstracker
 import android.app.Application
 import com.iTergt.routgpstracker.di.appModule
 import com.iTergt.routgpstracker.di.serviceModule
+import com.iTergt.routgpstracker.di.dataBaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
@@ -12,7 +13,7 @@ class App : Application() {
         super.onCreate()
         startKoin {
             androidContext(this@App)
-            modules(serviceModule, appModule)
+            modules(serviceModule, appModule, dataBaseModule)
         }
     }
 }

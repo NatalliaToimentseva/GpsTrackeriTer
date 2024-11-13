@@ -1,6 +1,5 @@
 package com.iTergt.routgpstracker.ui.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,7 +15,7 @@ private const val START_TIME = "00:00:00"
 private const val TIMER_DELAY = 1000L
 private const val TIMER_PERIOD = 1000L
 
-class HomeViewModel(private val locationController: LocationController) : ViewModel() {
+class HomeViewModel(locationController: LocationController) : ViewModel() {
 
     private val _isPermissionGranted: MutableLiveData<Boolean> = MutableLiveData(true)
     val isPermissionGranted: LiveData<Boolean> = _isPermissionGranted
@@ -30,22 +29,27 @@ class HomeViewModel(private val locationController: LocationController) : ViewMo
     private val _locationData: MutableLiveData<LocationModel> = MutableLiveData<LocationModel>()
     val locationData: LiveData<LocationModel> = _locationData
 
+    private val _isMapInitialized: MutableLiveData<Boolean> = MutableLiveData(false)
+    val isMapInitialized: LiveData<Boolean> = _isMapInitialized
+
+    private val _isFirstStart: MutableLiveData<Boolean> = MutableLiveData(true)
+    val isFirstStart: LiveData<Boolean> = _isFirstStart
+
     private val disposable = CompositeDisposable()
     private var timer: Timer? = null
+
+    init {
+        disposable.add(
+            locationController.listenLocationData().subscribe { location ->
+                _locationData.postValue(location)
+            }
+        )
+    }
 
     override fun onCleared() {
         super.onCleared()
         timer?.cancel()
         disposable.clear()
-    }
-
-    init {
-        disposable.add(
-            locationController.listenLocationData().subscribe{ location ->
-                _locationData.postValue(location)
-                Log.d("AAA", "VM _locationData = ${_locationData.value}")
-            }
-        )
     }
 
     fun setPermissionStatus(isGranted: Boolean) {
@@ -56,10 +60,19 @@ class HomeViewModel(private val locationController: LocationController) : ViewMo
         _isServiceRunning.value = isRunning
     }
 
+    fun setIsMapInitialized(isInitialized: Boolean) {
+        _isMapInitialized.value = isInitialized
+    }
+
+    fun setIsFirstStart(isFirst: Boolean) {
+        _isFirstStart.value = isFirst
+    }
+
     fun startTimer() {
         timer?.cancel()
         timer = Timer()
         timer?.schedule(object : TimerTask() {
+
             override fun run() {
                 _timePassed.postValue(
                     convertTimeToString(System.currentTimeMillis() - LocationService.startTime)

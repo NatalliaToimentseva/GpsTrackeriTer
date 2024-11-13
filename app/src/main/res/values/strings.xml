@@ -19,6 +19,13 @@
     <string name="snackbar_gps_action">Open settings</string>
     <string name="btn_my_location">Current location</string>
     <string name="btn_control_route">Control route</string>
+    <string name="start_timer">Time: 00:00:00</string>
+    <string name="start_distance">Distance: 0 m</string>
+    <string name="start_speed">Speed: 0 km/h</string>
+    <string name="start_averageSpeed">Average speed: 0 km/h</string>
     <string name="tv_timer">Time: %1$s</string>
+    <string name="tv_distance">Distance: %1$s m</string>
+    <string name="tv_speed">Speed: %1$s km/h</string>
+    <string name="tv_averageSpeed">Average speed: %1$s km/h</string>
 
 </resources>

@@ -1,8 +1,10 @@
 package com.iTergt.routgpstracker.ui.home
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
@@ -24,11 +26,16 @@ import com.iTergt.routgpstracker.utils.snackbarWithListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.osmdroid.config.Configuration
 import org.osmdroid.library.BuildConfig
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
 
 private const val OSM_MAP_PREFERENCES = "osm_pref"
 private const val SCHEME = "package"
+private const val FORMAT = "%.1f"
+private const val MLS_IN_SEC = 1000.0f
+private const val COEF_TO_KM_H = 3.6f
 
 class HomeFragment : Fragment() {
 
@@ -39,6 +46,7 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModel()
     private var pLauncher: ActivityResultLauncher<Array<String>>? = null
     private var binding: FragmentHomeBinding? = null
+    private var polyline: Polyline? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,6 +57,7 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
+    @SuppressLint("DefaultLocale")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestPermission()
@@ -58,6 +67,23 @@ class HomeFragment : Fragment() {
         checkServiceState()
         viewModel.timePassed.observe(viewLifecycleOwner) { time ->
             binding?.tvTime?.text = resources.getString(R.string.tv_timer, time)
+        }
+        viewModel.locationData.observe(viewLifecycleOwner) { location ->
+            val distanceFormated = String.format(FORMAT, location.distance)
+            val speedFormated = String.format(FORMAT, COEF_TO_KM_H * location.speed)
+            val averageSpeedFormated = String.format(
+                FORMAT,
+                COEF_TO_KM_H * (location.distance / ((System.currentTimeMillis() - LocationService.startTime) / MLS_IN_SEC))
+            )
+            binding?.run {
+                tvDistance.text = resources.getString(R.string.tv_distance, distanceFormated)
+                tvSpeed.text = resources.getString(R.string.tv_speed, speedFormated)
+                tvAverageSpeed.text =
+                    resources.getString(R.string.tv_averageSpeed, averageSpeedFormated)
+            }
+            if (viewModel.isMapInitialized.value == true) {
+                updatePolyline(location.geoPointsList)
+            }
         }
         binding?.btnStartStop?.setOnClickListener {
             if (viewModel.isServiceRunning.value == false) {
@@ -71,10 +97,19 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         if (viewModel.isPermissionGranted.value == true) {
-            initOsmMap()
+            if (viewModel.isMapInitialized.value == false) {
+                initOsmMap()
+            }
         } else {
             showPermissionDialog()
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        polyline = null
+        viewModel.setIsMapInitialized(false)
+        viewModel.setIsFirstStart(true)
     }
 
     private fun settingsOsmMap() {
@@ -87,6 +122,8 @@ class HomeFragment : Fragment() {
 
     private fun initOsmMap() {
         binding?.run {
+            polyline = Polyline()
+            polyline?.outlinePaint?.color = Color.GREEN
             map.controller.setZoom(20.0)
             val myLocationProvider = GpsMyLocationProvider(requireContext())
             val myLocationOverlay = MyLocationNewOverlay(myLocationProvider, map)
@@ -95,7 +132,30 @@ class HomeFragment : Fragment() {
             myLocationOverlay.runOnFirstFix {
                 map.overlays.clear()
                 map.overlays.add(myLocationOverlay)
+                map.overlays.add(polyline)
             }
+        }
+        viewModel.setIsMapInitialized(true)
+    }
+
+    private fun drawPoint(list: List<GeoPoint>) {
+        if (list.isNotEmpty()) {
+            polyline?.addPoint(list[list.size - 1])
+        }
+    }
+
+    private fun drawAllPoints(list: List<GeoPoint>) {
+            list.forEach { point ->
+                polyline?.addPoint(point)
+            }
+    }
+
+    private fun updatePolyline(list: List<GeoPoint>) {
+        if (list.size > 1 && viewModel.isFirstStart.value == true) {
+            drawAllPoints(list)
+            viewModel.setIsFirstStart(false)
+        } else {
+            drawPoint(list)
         }
     }
 
@@ -174,6 +234,7 @@ class HomeFragment : Fragment() {
         viewModel.stopTimer()
         binding?.btnStartStop?.setImageResource(R.drawable.btn_start)
         requireContext().stopService(Intent(requireContext(), LocationService::class.java))
+        polyline?.setPoints(arrayListOf())
     }
 
     private fun checkServiceState() {

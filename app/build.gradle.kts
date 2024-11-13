@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs")
+    id("com.google.devtools.ksp") version "1.9.10-1.0.13"
 }
 
 android {
@@ -20,13 +21,14 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -61,10 +63,17 @@ dependencies {
 
     implementation(libs.play.services.location)
 
+    implementation(libs.rxandroid)
+    implementation(libs.rxjava)
+
+    implementation("androidx.room:room-runtime:2.6.1")
+    ksp("androidx.room:room-compiler:2.6.1")
+    implementation("androidx.room:room-rxjava3:2.6.1")
+    implementation("androidx.room:room-paging:2.6.1")
+
     implementation("org.osmdroid:osmdroid-android:6.1.10")
     implementation("com.github.MKergall:osmbonuspack:6.7.0")
-    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
-    implementation("io.reactivex.rxjava3:rxjava:3.1.5")
+
 
 
 }
