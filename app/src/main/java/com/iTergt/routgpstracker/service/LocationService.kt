@@ -30,52 +30,81 @@ private const val COEF_TO_KM_H = 3.6f
 private const val START_DISTANCE = 0.0f
 private const val START_TIME = 0L
 private const val DEFAULT_UPDATE_TIME_LONG = 3000L
+private const val MIN_SPEED_TO_DETECT_MOVING = 0.5
 
+/**
+ * A service that provides continuous location updates in the foreground.
+ *
+ * This service utilizes the Fused Location Provider to obtain location data
+ * and broadcasts it through a LocationController. It runs in the foreground
+ * to ensure that location updates continue even when the app is not in the foreground.
+ */
 class LocationService : Service() {
 
-    private val notificationManager: NotificationManager by inject()
-    private val locationController: LocationController by inject()
-    private var fusedLocationProvider: FusedLocationProviderClient? = null
-    private var locationRequest: LocationRequest? = null
-    private var locationCallback: LocationCallback? = null
-    private var lastLocation: Location? = null
-    private var distance = START_DISTANCE
-    private val geoPoints: ArrayList<GeoPoint> = arrayListOf()
+    private val notificationManager: NotificationManager by inject() // Notification manager for foreground service
+    private val locationController: LocationController by inject() // Controller to manage location data
+    private var fusedLocationProvider: FusedLocationProviderClient? =
+        null // Fused location provider client
+    private var locationRequest: LocationRequest? = null // Location request configuration
+    private var locationCallback: LocationCallback? = null // Callback for location updates
+    private var lastLocation: Location? = null // Last known location
+    private var distance = START_DISTANCE // Total distance traveled
+    private val geoPoints: ArrayList<GeoPoint> = arrayListOf() // List of geographical points
 
-    private var isDebug = true //for debug only
+    private var isDebug = true // Flag for enabling debug mode (for development purposes)
 
-    override fun onBind(intent: Intent?): IBinder? = null
+    override fun onBind(intent: Intent?): IBinder? =
+        null // Not binding this service to any activity
 
+    /**
+     * Called when the service is created. Initializes the location settings.
+     */
     override fun onCreate() {
         super.onCreate()
-        initLocation()
+        initLocation() // Initialize location settings
     }
 
+    /**
+     * Called when the service is started. Sets up the foreground notification
+     * and starts location updates.
+     *
+     * @param intent The intent that started the service.
+     * @param flags Additional data about the start request.
+     * @param startId A unique integer representing this specific request to start.
+     * @return An integer indicating how to continue the service.
+     */
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         startForeground(
             NOTIFICATION_ID,
-            notificationManager.buildNotification()
+            notificationManager.buildNotification() // Build and show the foreground notification
         )
-        startLocationUpdates()
-        isRunning = true
-        startTime = System.currentTimeMillis()
-        return START_STICKY
+        startLocationUpdates() // Start receiving location updates
+        isRunning = true // Set service running flag
+        startTime = System.currentTimeMillis() // Record the start time
+        return START_STICKY // Indicate that the service should be restarted if terminated
     }
 
+    /**
+     * Called when the service is destroyed. Stops location updates and resets state.
+     */
     override fun onDestroy() {
         super.onDestroy()
-        isRunning = false
-        startTime = START_TIME
-        locationCallback?.let { fusedLocationProvider?.removeLocationUpdates(it) }
+        isRunning = false // Reset service running flag
+        startTime = START_TIME // Reset start time
+        locationCallback?.let { fusedLocationProvider?.removeLocationUpdates(it) } // Stop location updates
     }
 
+    /**
+     * Initializes the location settings, including the location request parameters.
+     */
     private fun initLocation() {
         val locationUpdateInterval = PreferenceManager.getDefaultSharedPreferences(this).getString(
             TIME_PREFERENCE_KEY, DEFAULT_UPDATE_TIME
-        )?.toLongOrNull() ?: DEFAULT_UPDATE_TIME_LONG
-        fusedLocationProvider = LocationServices.getFusedLocationProviderClient(this)
+        )?.toLongOrNull() ?: DEFAULT_UPDATE_TIME_LONG // Get update interval from preferences
+        fusedLocationProvider =
+            LocationServices.getFusedLocationProviderClient(this) // Initialize fused location provider
         locationRequest = LocationRequest.Builder(PRIORITY_HIGH_ACCURACY, locationUpdateInterval)
-            .setMinUpdateIntervalMillis(locationUpdateInterval)
+            .setMinUpdateIntervalMillis(locationUpdateInterval) // Set minimum update interval
             .build()
         locationCallback = object : LocationCallback() {
 
@@ -84,49 +113,59 @@ class LocationService : Service() {
                 super.onLocationResult(result)
                 if (lastLocation != null) {
                     result.lastLocation?.let { location ->
-                        if (location.speed > 0.5 || isDebug) {
+                        if (location.speed > MIN_SPEED_TO_DETECT_MOVING || isDebug) { // Only process if moving or in debug mode
                             lastLocation?.run {
-                                distance += distanceTo(location)
+                                distance += distanceTo(location) // Calculate distance traveled
                             }
-                            geoPoints.add(GeoPoint(location.latitude, location.longitude))
-                            val distanceFormated = String.format(FORMAT, distance)
-                            val speedFormated = String.format(FORMAT, COEF_TO_KM_H * location.speed)
-                            val averageSpeedFormated = String.format(
-                                FORMAT,
-                                COEF_TO_KM_H * (distance / ((System.currentTimeMillis() - startTime) / MLS_IN_SEC))
-                            )
-                            val locationModel = LocationModel(
-                                speedFormated,
-                                averageSpeedFormated,
-                                distanceFormated,
-                                geoPoints
-                            )
-                            locationController.locationData.onNext(locationModel)
+                            geoPoints.add(
+                                GeoPoint(
+                                    location.latitude,
+                                    location.longitude
+                                )
+                            ) // Add new GeoPoint
                         }
+                        val distanceFormatted =
+                            String.format(FORMAT, distance) // Format distance
+                        val speedFormatted =
+                            String.format(FORMAT, COEF_TO_KM_H * location.speed) // Format speed
+                        val averageSpeedFormatted = String.format(
+                            FORMAT,
+                            COEF_TO_KM_H * (distance / ((System.currentTimeMillis() - startTime) / MLS_IN_SEC)) // Format average speed
+                        )
+                        val locationModel = LocationModel(
+                            speedFormatted,
+                            averageSpeedFormatted,
+                            distanceFormatted,
+                            geoPoints
+                        )
+                        locationController.locationData.onNext(locationModel) // Send location data
                     }
                 }
-                lastLocation = result.lastLocation
+                lastLocation = result.lastLocation // Update last known location
             }
         }
     }
 
+    /**
+     * Starts location updates if the necessary permissions are granted.
+     */
     private fun startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(
                 this,
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
-        ) return
+        ) return // Return if permission is not granted
         if (locationRequest != null && locationCallback != null) {
             fusedLocationProvider?.requestLocationUpdates(
                 locationRequest!!,
                 locationCallback!!,
-                Looper.getMainLooper()
+                Looper.getMainLooper() // Use the main thread for location updates
             )
         }
     }
 
     companion object {
-        var isRunning = false
-        var startTime = START_TIME
+        var isRunning = false // Indicates if the service is currently running
+        var startTime = START_TIME // Records the start time of the service
     }
 }

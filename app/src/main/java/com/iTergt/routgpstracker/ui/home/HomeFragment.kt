@@ -7,6 +7,7 @@ import android.graphics.Color
 import android.location.LocationManager
 import android.net.ConnectivityManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.view.LayoutInflater
@@ -14,6 +15,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
@@ -41,9 +43,11 @@ const val SCHEME = "package"
 
 class HomeFragment : Fragment() {
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private val permissions = arrayListOf(
         Manifest.permission.ACCESS_FINE_LOCATION,
-        Manifest.permission.ACCESS_COARSE_LOCATION
+        Manifest.permission.ACCESS_COARSE_LOCATION,
+        Manifest.permission.POST_NOTIFICATIONS
     )
     private val viewModel: HomeViewModel by viewModel()
     private var pLauncher: ActivityResultLauncher<Array<String>>? = null
@@ -60,6 +64,7 @@ class HomeFragment : Fragment() {
         return binding?.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         requestPermission()
@@ -183,6 +188,7 @@ class HomeFragment : Fragment() {
         myLocationOverlay?.enableFollowLocation()
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     private fun requestPermission() {
         pLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
@@ -248,6 +254,7 @@ class HomeFragment : Fragment() {
                 LocationService::class.java
             )
         )
+        viewModel.resetLocation()
         viewModel.setIsServiceRunning(true)
         viewModel.startTimer()
         binding?.btnStartStop?.setImageResource(R.drawable.btn_stop)

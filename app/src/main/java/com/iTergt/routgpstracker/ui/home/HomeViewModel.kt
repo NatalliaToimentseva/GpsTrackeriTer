@@ -15,6 +15,9 @@ import java.util.Timer
 import java.util.TimerTask
 
 const val START_TIME = "00:00:00"
+const val START_SPEED = "0"
+const val START_AVERAGE_SPEED = "0"
+const val START_DISTANCE = "0"
 private const val TIMER_DELAY = 1000L
 private const val TIMER_PERIOD = 1000L
 
@@ -115,8 +118,17 @@ class HomeViewModel(
         )
     }
 
+    fun resetLocation() {
+        _locationData.value = LocationModel(
+            START_SPEED,
+            START_AVERAGE_SPEED,
+            START_DISTANCE,
+            arrayListOf()
+        )
+    }
+
     private fun handleResult(result: HomeResult) {
-        when(result) {
+        when (result) {
             is HomeResult.Error -> operationResult?.invoke(result.message)
             is HomeResult.Success -> operationResult?.invoke(null)
         }
