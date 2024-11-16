@@ -5,17 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.iTergt.routgpstracker.controllers.LocationController
 import com.iTergt.routgpstracker.models.LocationModel
+import com.iTergt.routgpstracker.models.RouteModel
 import com.iTergt.routgpstracker.service.LocationService
+import com.iTergt.routgpstracker.ui.home.domain.HomeResult
+import com.iTergt.routgpstracker.ui.home.domain.SaveRouteUseCase
 import com.iTergt.routgpstracker.utils.convertTimeToString
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import java.util.Timer
 import java.util.TimerTask
 
-private const val START_TIME = "00:00:00"
+const val START_TIME = "00:00:00"
 private const val TIMER_DELAY = 1000L
 private const val TIMER_PERIOD = 1000L
 
-class HomeViewModel(locationController: LocationController) : ViewModel() {
+class HomeViewModel(
+    locationController: LocationController,
+    private val saveRouteUseCase: SaveRouteUseCase
+) : ViewModel() {
 
     private val _isPermissionGranted: MutableLiveData<Boolean> = MutableLiveData(true)
     val isPermissionGranted: LiveData<Boolean> = _isPermissionGranted
@@ -39,6 +45,7 @@ class HomeViewModel(locationController: LocationController) : ViewModel() {
     val isShowDialog: LiveData<Boolean> = _isShowDialog
 
     private val disposable = CompositeDisposable()
+    var operationResult: ((message: String?) -> Unit)? = null
     private var timer: Timer? = null
 
     init {
@@ -90,5 +97,28 @@ class HomeViewModel(locationController: LocationController) : ViewModel() {
 
     fun stopTimer() {
         timer?.cancel()
+    }
+
+    fun saveRoute(routeModel: RouteModel) {
+        disposable.add(
+            saveRouteUseCase.saveRoute(routeModel)
+                .subscribe(
+                    { result ->
+                        handleResult(result)
+                    },
+                    { error ->
+                        error.message?.let {
+                            handleResult(HomeResult.Error(it))
+                        }
+                    }
+                )
+        )
+    }
+
+    private fun handleResult(result: HomeResult) {
+        when(result) {
+            is HomeResult.Error -> operationResult?.invoke(result.message)
+            is HomeResult.Success -> operationResult?.invoke(null)
+        }
     }
 }

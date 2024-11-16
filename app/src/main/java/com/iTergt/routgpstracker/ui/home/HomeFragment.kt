@@ -12,15 +12,19 @@ import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.iTergt.routgpstracker.R
 import com.iTergt.routgpstracker.databinding.FragmentHomeBinding
+import com.iTergt.routgpstracker.models.RouteModel
 import com.iTergt.routgpstracker.service.LocationService
+import com.iTergt.routgpstracker.ui.settings.COLOR_PREFERENCE_KEY
+import com.iTergt.routgpstracker.ui.settings.DEFAULT_ROUTE_COLOR
+import com.iTergt.routgpstracker.utils.geoPointsConvertToString
 import com.iTergt.routgpstracker.utils.snackbar
 import com.iTergt.routgpstracker.utils.snackbarWithListener
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -30,9 +34,10 @@ import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Polyline
 import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
+import java.time.LocalDate
 
-private const val OSM_MAP_PREFERENCES = "osm_pref"
-private const val SCHEME = "package"
+const val OSM_MAP_PREFERENCES = "osm_pref"
+const val SCHEME = "package"
 
 class HomeFragment : Fragment() {
 
@@ -43,6 +48,7 @@ class HomeFragment : Fragment() {
     private val viewModel: HomeViewModel by viewModel()
     private var pLauncher: ActivityResultLauncher<Array<String>>? = null
     private var binding: FragmentHomeBinding? = null
+    private var myLocationOverlay: MyLocationNewOverlay? = null
     private var polyline: Polyline? = null
 
     override fun onCreateView(
@@ -75,6 +81,13 @@ class HomeFragment : Fragment() {
                 updatePolyline(location.geoPointsList)
             }
         }
+        viewModel.operationResult = { message ->
+            if (message != null) {
+                binding?.homeContainer?.snackbar(message)
+            } else {
+                binding?.homeContainer?.snackbar(resources.getString(R.string.save_route_success))
+            }
+        }
         viewModel.isShowDialog.observe(viewLifecycleOwner) { isShow ->
             if (isShow) {
                 showSaveRouteDialog()
@@ -87,6 +100,9 @@ class HomeFragment : Fragment() {
             } else {
                 stopLocationService()
             }
+        }
+        binding?.btnCurrentLocation?.setOnClickListener {
+            showCurrentLocation()
         }
     }
 
@@ -119,16 +135,21 @@ class HomeFragment : Fragment() {
     private fun initOsmMap() {
         binding?.run {
             polyline = Polyline()
-            polyline?.outlinePaint?.color = Color.GREEN
+            polyline?.outlinePaint?.color = Color.parseColor(
+                PreferenceManager.getDefaultSharedPreferences(requireContext()).getString(
+                    COLOR_PREFERENCE_KEY, DEFAULT_ROUTE_COLOR
+                )
+            )
             map.controller.setZoom(20.0)
             val myLocationProvider = GpsMyLocationProvider(requireContext())
-            val myLocationOverlay = MyLocationNewOverlay(myLocationProvider, map)
-            myLocationOverlay.enableMyLocation()
-            myLocationOverlay.enableFollowLocation()
-            myLocationOverlay.runOnFirstFix {
-                map.overlays.clear()
-                map.overlays.add(myLocationOverlay)
-                map.overlays.add(polyline)
+            myLocationOverlay = MyLocationNewOverlay(myLocationProvider, map).apply {
+                enableMyLocation()
+                enableFollowLocation()
+                runOnFirstFix {
+                    map.overlays.clear()
+                    map.overlays.add(polyline)
+                    map.overlays.add(myLocationOverlay)
+                }
             }
         }
         viewModel.setIsMapInitialized(true)
@@ -153,6 +174,13 @@ class HomeFragment : Fragment() {
         } else {
             drawPoint(list)
         }
+    }
+
+    private fun showCurrentLocation() {
+        myLocationOverlay?.myLocation?.let { location ->
+            binding?.map?.controller?.animateTo(location)
+        }
+        myLocationOverlay?.enableFollowLocation()
     }
 
     private fun requestPermission() {
@@ -236,7 +264,8 @@ class HomeFragment : Fragment() {
 
     private fun showSaveRouteDialog() {
         val averageSped =
-            viewModel.locationData.value?.averageSpeed ?: resources.getString(R.string.start_averageSpeed)
+            viewModel.locationData.value?.averageSpeed
+                ?: resources.getString(R.string.start_averageSpeed)
         val distance =
             viewModel.locationData.value?.distance ?: resources.getString(R.string.start_distance)
         MaterialAlertDialogBuilder(requireContext())
@@ -250,7 +279,18 @@ class HomeFragment : Fragment() {
                 )
             )
             .setPositiveButton(getString(R.string.positive_button)) { _, _ ->
-                Toast.makeText(requireContext(), "Save", Toast.LENGTH_LONG).show()
+                viewModel.locationData.value?.run {
+                    viewModel.saveRoute(
+                        RouteModel(
+                            0,
+                            LocalDate.now(),
+                            viewModel.timePassed.value ?: START_TIME,
+                            averageSpeed,
+                            distance,
+                            geoPointsConvertToString(geoPointsList)
+                        )
+                    )
+                }
                 viewModel.setShowDialog(false)
             }
             .setNegativeButton(getString(R.string.negative_button)) { _, _ ->

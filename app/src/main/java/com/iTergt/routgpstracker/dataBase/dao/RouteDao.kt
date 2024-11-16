@@ -16,6 +16,9 @@ interface RouteDao {
     @Query("SELECT * FROM Route")
     fun getRoutes(): PagingSource<Int, RouteEntity>
 
+    @Query("SELECT * FROM Route WHERE id = :id")
+    fun getRouteById(id: Long): RouteEntity
+
     @Delete
     fun deleteRoute(routeEntity: RouteEntity)
 }

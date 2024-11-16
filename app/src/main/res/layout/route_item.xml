@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="@dimen/dm_2">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/l_item_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dm_10"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tv_data"
+            style="@style/MainTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="12/12/2023" />
+
+        <TextView
+            android:id="@+id/tv_distance"
+            style="@style/TitleTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="5.6 km" />
+
+        <ImageButton
+            android:id="@+id/imb_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm_5"
+            android:background="@null"
+            android:contentDescription="@string/ic_speed"
+            android:src="@drawable/ic_delete"
+            app:layout_constraintEnd_toEndOf="@+id/tv_distance"
+            app:layout_constraintTop_toBottomOf="@+id/tv_distance" />
+
+        <ImageView
+            android:id="@+id/im_speed_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm_5"
+            android:contentDescription="@string/ic_speed"
+            android:src="@drawable/icon_speed"
+            app:layout_constraintStart_toStartOf="@+id/tv_data"
+            app:layout_constraintTop_toBottomOf="@+id/tv_data" />
+
+        <TextView
+            android:id="@+id/tv_speed"
+            style="@style/MainTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dm_10"
+            app:layout_constraintBottom_toBottomOf="@+id/im_speed_icon"
+            app:layout_constraintStart_toEndOf="@+id/im_speed_icon"
+            app:layout_constraintTop_toTopOf="@+id/im_speed_icon"
+            tools:text="Speed - 3.5km/hm" />
+
+        <ImageView
+            android:id="@+id/im_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dm_5"
+            android:contentDescription="@string/ic_speed"
+            android:src="@drawable/ic_update_time"
+            app:layout_constraintStart_toStartOf="@+id/im_speed_icon"
+            app:layout_constraintTop_toBottomOf="@+id/im_speed_icon" />
+
+        <TextView
+            android:id="@+id/tv_time"
+            style="@style/MainTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dm_10"
+            app:layout_constraintBottom_toBottomOf="@+id/im_time"
+            app:layout_constraintStart_toEndOf="@+id/im_time"
+            app:layout_constraintTop_toTopOf="@+id/im_time"
+            tools:text="Time - 00:10:00 m" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>
+

@@ -7,8 +7,10 @@ import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.PreferenceFragmentCompat
 import com.iTergt.routgpstracker.R
 
-private const val DEFAULT_UPDATE_TIME = "3000"
-private const val DEFAULT_ROUTE_COLOR = "#FF2196F3"
+const val COLOR_PREFERENCE_KEY = "route_color_key"
+const val TIME_PREFERENCE_KEY = "update_time_key"
+const val DEFAULT_UPDATE_TIME = "3000"
+const val DEFAULT_ROUTE_COLOR = "#FF2196F3"
 private const val SEPARATOR = ":"
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -32,8 +34,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun onChangedListener(): OnPreferenceChangeListener {
         return OnPreferenceChangeListener { preference, value ->
             when (preference.key) {
-                resources.getString(R.string.update_time_key) -> onTimeChanged(value.toString())
-                resources.getString(R.string.route_color_key) -> preference.icon?.setTint(
+                TIME_PREFERENCE_KEY -> onTimeChanged(value.toString())
+                COLOR_PREFERENCE_KEY -> preference.icon?.setTint(
                     Color.parseColor(
                         value.toString()
                     )

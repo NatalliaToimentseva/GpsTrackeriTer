@@ -66,6 +66,9 @@ dependencies {
     implementation(libs.rxandroid)
     implementation(libs.rxjava)
 
+    implementation("androidx.paging:paging-runtime:3.3.4")
+    implementation("androidx.paging:paging-rxjava3:3.3.4")
+
     implementation("androidx.room:room-runtime:2.6.1")
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-rxjava3:2.6.1")

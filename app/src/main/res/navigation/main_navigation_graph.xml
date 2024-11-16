@@ -14,9 +14,22 @@
         android:id="@+id/routesFragment"
         android:name="com.iTergt.routgpstracker.ui.routes.RoutesFragment"
         android:label="fragment_tracks"
-        tools:layout="@layout/fragment_routes" />
+        tools:layout="@layout/fragment_routes" >
+        <action
+            android:id="@+id/action_routesFragment_to_routeDetailsFragment"
+            app:destination="@id/routeDetailsFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.iTergt.routgpstracker.ui.settings.SettingsFragment"
         android:label="fragment_settings" />
+    <fragment
+        android:id="@+id/routeDetailsFragment"
+        android:name="com.iTergt.routgpstracker.ui.routeDetails.RouteDetailsFragment"
+        android:label="fragment_route_details"
+        tools:layout="@layout/fragment_route_details" >
+        <argument
+            android:name="id"
+            app:argType="long" />
+    </fragment>
 </navigation>

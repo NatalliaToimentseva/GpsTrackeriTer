@@ -15,12 +15,16 @@
     <string name="request_permission_title">Permission request</string>
     <string name="request_permission_message">Location permission is required to display your route.</string>
     <string name="save_route_dialog_title">Save this route?</string>
+    <string name="delete_route_dialog_title">Delete this route?</string>
     <string name="save_route_dialog_message">Route information:\nTime: %1$s\nAverage speed: %2$s km/h\nDistance: %3$s m</string>
+    <string name="delete_route_dialog_message">Confirm deletion of the route</string>
     <string name="check_internet_message">Internet is not available, check your connection!</string>
     <string name="snackbar_gps_message">GPS is disabled, enable in settings</string>
     <string name="snackbar_gps_action">Open settings</string>
     <string name="btn_my_location">Current location</string>
+    <string name="btn_show_route">Show route</string>
     <string name="btn_control_route">Control route</string>
+    <string name="route_date">Date: %1$s</string>
     <string name="start_timer">Time: 00:00:00</string>
     <string name="start_distance">Distance: 0 m</string>
     <string name="start_speed">Speed: 0 km/h</string>
@@ -29,5 +33,8 @@
     <string name="tv_speed">Speed: %1$s km/h</string>
     <string name="tv_averageSpeed">Average speed: %1$s km/h</string>
     <string name="tv_distance">Distance: %1$s m</string>
+    <string name="save_route_success">Route was saved</string>
+    <string name="delete_route_success">Route was deleted</string>
+    <string name="ic_speed">ic speed</string>
 
 </resources>

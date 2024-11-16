@@ -9,4 +9,14 @@
         <item name="android:padding">@dimen/dm_5</item>
     </style>
 
+    <style name="MainTextStyle">
+        <item name="android:fontFamily">@font/alumni_sans_medium</item>
+        <item name="android:textSize">@dimen/sp_18</item>
+    </style>
+
+    <style name="TitleTextStyle" parent="MainTextStyle">
+        <item name="android:textSize">@dimen/sp_24</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>
