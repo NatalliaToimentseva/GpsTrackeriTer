@@ -22,4 +22,11 @@
 
     </PreferenceCategory>
 
+    <PreferenceCategory app:title="@string/settings_account">
+        <Preference
+            android:key="@string/settings_logout_key"
+            android:summary="@string/settings_logout_message"
+            android:title="@string/settings_logout_title" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

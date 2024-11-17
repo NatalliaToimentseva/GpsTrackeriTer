@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "696383639637",
+    "project_id": "gpstrackeriter",
+    "storage_bucket": "gpstrackeriter.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:696383639637:android:4f7bc2fddf5c1b073984dc",
+        "android_client_info": {
+          "package_name": "com.iTergt.routgpstracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBW_mcaz_GHnAr242N_9uRVG3BAdRCW-gU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

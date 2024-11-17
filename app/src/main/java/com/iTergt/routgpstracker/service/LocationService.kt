@@ -18,8 +18,8 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority.PRIORITY_HIGH_ACCURACY
 import com.iTergt.routgpstracker.controllers.LocationController
 import com.iTergt.routgpstracker.models.LocationModel
-import com.iTergt.routgpstracker.ui.settings.DEFAULT_UPDATE_TIME
-import com.iTergt.routgpstracker.ui.settings.TIME_PREFERENCE_KEY
+import com.iTergt.routgpstracker.ui.tabs.settings.DEFAULT_UPDATE_TIME
+import com.iTergt.routgpstracker.ui.tabs.settings.TIME_PREFERENCE_KEY
 import org.koin.android.ext.android.inject
 import org.osmdroid.util.GeoPoint
 

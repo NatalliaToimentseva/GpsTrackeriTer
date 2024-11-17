@@ -70,9 +70,9 @@ class RouteDetailsViewModel(
      *
      * @param id The ID of the route to load.
      */
-    fun loadRoute(id: Long) {
+    fun loadRoute(id: Long, uid: String) {
         disposable.add(
-            loadRouteUseCase.loadRoute(id)
+            loadRouteUseCase.loadRoute(id, uid)
                 .subscribeOn(Schedulers.io()) // Perform the operation on the IO thread
                 .observeOn(AndroidSchedulers.mainThread()) // Observe the result on the main thread
                 .subscribe(

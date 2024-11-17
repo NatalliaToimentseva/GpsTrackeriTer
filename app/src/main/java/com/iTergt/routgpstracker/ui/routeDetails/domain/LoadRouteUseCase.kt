@@ -8,10 +8,10 @@ import io.reactivex.rxjava3.schedulers.Schedulers
 
 class LoadRouteUseCase(private val repository: RouteRepository) {
 
-    fun loadRoute(id: Long): Single<RouteDetailsResult> {
+    fun loadRoute(id: Long, uid: String): Single<RouteDetailsResult> {
         return Single.create<RouteDetailsResult> { emitter ->
             try {
-                val route = repository.getRouteById(id).toRouteModel()
+                val route = repository.getRouteById(id, uid).toRouteModel()
                 emitter.onSuccess(RouteDetailsResult.Success(route))
             } catch (e: SQLiteConstraintException) {
                 emitter.onError(e)

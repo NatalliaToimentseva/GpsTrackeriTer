@@ -20,10 +20,12 @@ data class RouteEntity(
     @ColumnInfo("distance")
     val distance: String,
     @ColumnInfo("geo_points")
-    val geoPoints: String
+    val geoPoints: String,
+    @ColumnInfo("user_uid")
+    val userUid: String
 ) {
 
     fun toRouteModel(): RouteModel {
-        return RouteModel(id, date, time, averageSpeed, distance, geoPoints)
+        return RouteModel(id, date, time, averageSpeed, distance, geoPoints, userUid)
     }
 }

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs")
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -73,6 +74,11 @@ dependencies {
     ksp("androidx.room:room-compiler:2.6.1")
     implementation("androidx.room:room-rxjava3:2.6.1")
     implementation("androidx.room:room-paging:2.6.1")
+
+    implementation("androidx.viewpager2:viewpager2:1.1.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
+    implementation("com.google.firebase:firebase-auth")
 
     implementation("org.osmdroid:osmdroid-android:6.1.10")
     implementation("com.github.MKergall:osmbonuspack:6.7.0")

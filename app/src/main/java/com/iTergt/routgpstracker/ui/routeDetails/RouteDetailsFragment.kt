@@ -8,15 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.navArgs
 import androidx.preference.PreferenceManager
 import com.iTergt.routgpstracker.R
 import com.iTergt.routgpstracker.databinding.FragmentRouteDetailsBinding
-import com.iTergt.routgpstracker.ui.home.OSM_MAP_PREFERENCES
-import com.iTergt.routgpstracker.ui.settings.COLOR_PREFERENCE_KEY
-import com.iTergt.routgpstracker.ui.settings.DEFAULT_ROUTE_COLOR
+import com.iTergt.routgpstracker.repository.SharedPreferencesRepository
+import com.iTergt.routgpstracker.ui.tabs.home.OSM_MAP_PREFERENCES
+import com.iTergt.routgpstracker.ui.tabs.routes.ROUTE_DETAILS_ARGS_KEY
+import com.iTergt.routgpstracker.ui.tabs.settings.COLOR_PREFERENCE_KEY
+import com.iTergt.routgpstracker.ui.tabs.settings.DEFAULT_ROUTE_COLOR
 import com.iTergt.routgpstracker.utils.geoPointsConvertFromString
 import com.iTergt.routgpstracker.utils.snackbar
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.osmdroid.config.Configuration
 import org.osmdroid.library.BuildConfig
@@ -39,9 +41,14 @@ class RouteDetailsFragment : Fragment() {
     private val viewModel: RouteDetailsViewModel by viewModel()
 
     /**
+     * The SharedPreferencesRepository for getting user uid.
+     */
+    private val sharedPreference: SharedPreferencesRepository by inject()
+
+    /**
      * Navigation arguments containing the ID of the route to load.
      */
-    private val arguments: RouteDetailsFragmentArgs by navArgs()
+    private var id: Long? = null
 
     /**
      * Binding object for accessing views in the fragment layout.
@@ -75,8 +82,13 @@ class RouteDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Load the route using the provided route ID from arguments
-        viewModel.loadRoute(arguments.id)
+        // Load the route using the provided route ID from arguments if not null
+        id = arguments?.getLong(ROUTE_DETAILS_ARGS_KEY)
+        id?.let { id ->
+            sharedPreference.getUserUid()?.let { uid ->
+                viewModel.loadRoute(id, uid)
+            }
+        }
 
         // Set up error handling
         viewModel.onError = { message ->

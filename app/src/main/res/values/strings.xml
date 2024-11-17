@@ -4,6 +4,10 @@
     <string name="ic_routes">Routes</string>
     <string name="ic_settings">Settings</string>
     <string name="location_settings">Location</string>
+    <string name="settings_account">Account</string>
+    <string name="settings_logout_key">logout_key</string>
+    <string name="settings_logout_title">Logout</string>
+    <string name="settings_logout_message">click to logout</string>
     <string name="update_time">Update time</string>
     <string name="route_color">Route color</string>
     <string name="update_time_summary">Location update time</string>
@@ -34,7 +38,21 @@
     <string name="tv_averageSpeed">Average speed: %1$s km/h</string>
     <string name="tv_distance">Distance: %1$s m</string>
     <string name="save_route_success">Route was saved</string>
+    <string name="registration_success">Account was created</string>
+    <string name="login_success">Login successful</string>
     <string name="delete_route_success">Route was deleted</string>
     <string name="ic_speed">ic speed</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login">LogIn</string>
+    <string name="signup">SignUp</string>
+    <string name="email_field">Email</string>
+    <string name="password_field">Password</string>
+    <string name="log_in_screen_button">Log-in</string>
+    <string name="signup_screen_button">SignUp</string>
+    <string name="confirm_password_field">Confirm password</string>
+    <string name="error_message_password">length must be from 6 to 50, at least one capital and small letter, number, sign</string>
+    <string name="error_message_conf_password">The passwords do not match</string>
+    <string name="error_message_email">Check the correctness of the email</string>
+    <string name="error_empty_field">Field can not be empty</string>
 
 </resources>

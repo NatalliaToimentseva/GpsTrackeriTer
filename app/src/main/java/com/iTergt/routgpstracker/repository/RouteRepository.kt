@@ -15,9 +15,9 @@ interface RouteRepository {
 
     fun addRoute(routeEntity: RouteEntity)
 
-    fun getRoutes(): Flowable<PagingData<RouteEntity>>
+    fun getRoutes(uid: String): Flowable<PagingData<RouteEntity>>
 
-    fun getRouteById(id: Long): RouteEntity
+    fun getRouteById(id: Long, uid: String): RouteEntity
 
     fun deleteRoute(routeEntity: RouteEntity)
 }
@@ -26,17 +26,17 @@ class RouteRepositoryImpl(private val routeDao: RouteDao) : RouteRepository {
 
     override fun addRoute(routeEntity: RouteEntity) = routeDao.saveRoute(routeEntity)
 
-    override fun getRoutes(): Flowable<PagingData<RouteEntity>> {
+    override fun getRoutes(uid: String): Flowable<PagingData<RouteEntity>> {
         return Pager(
             config = PagingConfig(
                 pageSize = INIT_PAGE_SIZE,
                 prefetchDistance = INIT_LOAD_SIZE
             ),
-            pagingSourceFactory = { routeDao.getRoutes() }
+            pagingSourceFactory = { routeDao.getRoutes(uid) }
         ).flowable
     }
 
-    override fun getRouteById(id: Long): RouteEntity = routeDao.getRouteById(id)
+    override fun getRouteById(id: Long, uid: String): RouteEntity = routeDao.getRouteById(id, uid)
 
     override fun deleteRoute(routeEntity: RouteEntity) = routeDao.deleteRoute(routeEntity)
 }

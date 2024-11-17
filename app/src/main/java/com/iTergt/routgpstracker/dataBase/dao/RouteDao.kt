@@ -13,11 +13,11 @@ interface RouteDao {
     @Insert
     fun saveRoute(routeEntity: RouteEntity)
 
-    @Query("SELECT * FROM Route")
-    fun getRoutes(): PagingSource<Int, RouteEntity>
+    @Query("SELECT * FROM Route WHERE user_uid = :uid")
+    fun getRoutes(uid: String): PagingSource<Int, RouteEntity>
 
-    @Query("SELECT * FROM Route WHERE id = :id")
-    fun getRouteById(id: Long): RouteEntity
+    @Query("SELECT * FROM Route WHERE id = :id AND user_uid = :uid")
+    fun getRouteById(id: Long, uid: String): RouteEntity
 
     @Delete
     fun deleteRoute(routeEntity: RouteEntity)

@@ -2,34 +2,38 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_navigation_graph"
-    app:startDestination="@id/homeFragment">
+    android:id="@+id/main_navigation_graph">
 
     <fragment
-        android:id="@+id/homeFragment"
-        android:name="com.iTergt.routgpstracker.ui.home.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" />
-    <fragment
-        android:id="@+id/routesFragment"
-        android:name="com.iTergt.routgpstracker.ui.routes.RoutesFragment"
-        android:label="fragment_tracks"
-        tools:layout="@layout/fragment_routes" >
+        android:id="@+id/accountFragment"
+        android:name="com.iTergt.routgpstracker.ui.account.AccountFragment"
+        android:label="fragment_account"
+        tools:layout="@layout/fragment_account">
         <action
-            android:id="@+id/action_routesFragment_to_routeDetailsFragment"
+            android:id="@+id/action_accountFragment_to_tabsFragment"
+            app:destination="@id/tabsFragment"
+            app:popUpTo="@id/accountFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tabsFragment"
+        android:name="com.iTergt.routgpstracker.ui.tabs.TabsFragment"
+        android:label="fragment_tabs"
+        tools:layout="@layout/fragment_tabs">
+        <action
+            android:id="@+id/action_tabsFragment_to_routeDetailsFragment"
             app:destination="@id/routeDetailsFragment" />
     </fragment>
-    <fragment
-        android:id="@+id/settingsFragment"
-        android:name="com.iTergt.routgpstracker.ui.settings.SettingsFragment"
-        android:label="fragment_settings" />
+
     <fragment
         android:id="@+id/routeDetailsFragment"
         android:name="com.iTergt.routgpstracker.ui.routeDetails.RouteDetailsFragment"
         android:label="fragment_route_details"
-        tools:layout="@layout/fragment_route_details" >
+        tools:layout="@layout/fragment_route_details">
         <argument
             android:name="id"
             app:argType="long" />
     </fragment>
+
 </navigation>
