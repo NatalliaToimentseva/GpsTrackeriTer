@@ -1,7 +1,6 @@
 package com.iTergt.routgpstracker.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
@@ -22,8 +21,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-        val x = sharedPreference.isLoggedIn()
-        Log.d("AAA", "x = $x")
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController.apply {

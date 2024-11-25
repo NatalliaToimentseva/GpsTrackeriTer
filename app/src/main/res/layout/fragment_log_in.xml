@@ -5,6 +5,7 @@
     android:id="@+id/login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/authorization_bg"
     tools:context=".ui.account.login.LogInFragment">
 
     <Space
@@ -14,32 +15,36 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/logo"
+        style="@style/LogoTextViewStyle"
+        android:text="@string/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/space" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/email_login_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dm_10"
-        android:layout_marginVertical="@dimen/dm_5"
+        style="@style/TextInputLayoutStyle"
+        app:boxStrokeColor="@color/outlined_text_input_layout_colors"
         app:endIconMode="clear_text"
         app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/space">
+        app:layout_constraintTop_toBottomOf="@+id/logo">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/email_login_ET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/email_field"
-            android:inputType="textEmailAddress" />
+            android:inputType="textEmailAddress"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password_login_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dm_10"
-        android:layout_marginVertical="@dimen/dm_5"
+        style="@style/TextInputLayoutStyle"
+        app:boxStrokeColor="@color/outlined_text_input_layout_colors"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -56,14 +61,9 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/login_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/dm_10"
-        android:layout_marginVertical="@dimen/dm_5"
-        android:layout_marginTop="@dimen/dm_10"
-        android:enabled="false"
+        style="@style/AuthorizationMaterialButtonStyle"
         android:text="@string/log_in_screen_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

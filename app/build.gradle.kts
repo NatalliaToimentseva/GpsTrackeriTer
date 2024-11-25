@@ -1,14 +1,13 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
-    id("androidx.navigation.safeargs")
     id("com.google.devtools.ksp") version "1.9.10-1.0.13"
     id("com.google.gms.google-services")
 }
 
 android {
     namespace = "com.iTergt.routgpstracker"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.iTergt.routgpstracker"
@@ -49,11 +48,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
-    implementation(libs.androidx.preference)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation(libs.androidx.preference)
     implementation(libs.androidx.preference.ktx)
 
     implementation(libs.androidx.navigation.fragment.ktx)
@@ -67,22 +66,19 @@ dependencies {
     implementation(libs.rxandroid)
     implementation(libs.rxjava)
 
-    implementation("androidx.paging:paging-runtime:3.3.4")
-    implementation("androidx.paging:paging-rxjava3:3.3.4")
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.rxjava3)
 
-    implementation("androidx.room:room-runtime:2.6.1")
-    ksp("androidx.room:room-compiler:2.6.1")
-    implementation("androidx.room:room-rxjava3:2.6.1")
-    implementation("androidx.room:room-paging:2.6.1")
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
+    implementation(libs.room.rxjava3)
+    implementation(libs.room.paging)
 
-    implementation("androidx.viewpager2:viewpager2:1.1.0")
+    implementation(libs.viewpager2)
 
-    implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
-    implementation("com.google.firebase:firebase-auth")
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
 
-    implementation("org.osmdroid:osmdroid-android:6.1.10")
-    implementation("com.github.MKergall:osmbonuspack:6.7.0")
-
-
-
+    implementation(libs.osmdroid.android)
+    implementation(libs.osmbonuspack)
 }

@@ -42,14 +42,14 @@ private const val MIN_SPEED_TO_DETECT_MOVING = 0.5
 class LocationService : Service() {
 
     private val notificationManager: NotificationManager by inject() // Notification manager for foreground service
-    private val locationController: LocationController by inject() // Controller to manage location data
+    private val locationController: LocationController by inject() // Controller to manage location data'
+    private val geoPoints: ArrayList<GeoPoint> = arrayListOf() // List of geographical points
     private var fusedLocationProvider: FusedLocationProviderClient? =
         null // Fused location provider client
     private var locationRequest: LocationRequest? = null // Location request configuration
     private var locationCallback: LocationCallback? = null // Callback for location updates
     private var lastLocation: Location? = null // Last known location
     private var distance = START_DISTANCE // Total distance traveled
-    private val geoPoints: ArrayList<GeoPoint> = arrayListOf() // List of geographical points
 
     private var isDebug = true // Flag for enabling debug mode (for development purposes)
 

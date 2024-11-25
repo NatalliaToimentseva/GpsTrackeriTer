@@ -5,4 +5,15 @@
     <color name="lite_white">#B9FFFFFF</color>
     <color name="transparent_white">#32FFFFFF</color>
     <color name="mint">#84E2D9</color>
+    <color name="mint_dark">#E7369488</color>
+    <color name="blue">#15B3FB</color>
+    <color name="blue_dark">#1784DC</color>
+    <color name="graphite">#494747</color>
+    <color name="background">#7FE2F8F8</color>
+    <color name="mintL">#98AAF2E8</color>
+    <color name="mintD">#292196F3</color>
+    <color name="yellow">#EBE8B3</color>
+    <color name="green">#8BC34A</color>
+    <color name="red">#F44336</color>
+
 </resources>

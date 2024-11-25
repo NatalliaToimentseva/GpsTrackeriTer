@@ -1,8 +1,8 @@
 [versions]
 agp = "8.7.2"
 koinCore = "4.0.0"
-kotlin = "1.9.0"
-coreKtx = "1.13.1"
+kotlin = "1.9.10"
+coreKtx = "1.15.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -10,14 +10,21 @@ appcompat = "1.7.0"
 material = "1.12.0"
 activity = "1.9.3"
 constraintlayout = "2.2.0"
-navigationFragmentKtx = "2.8.3"
-navigationUiKtx = "2.8.3"
-navigationSafeArgsGradlePlugin = "2.8.3"
+navigationFragmentKtx = "2.8.4"
+navigationUiKtx = "2.8.4"
+navigationSafeArgsGradlePlugin = "2.8.4"
 preferenceKtx = "1.2.1"
 preference = "1.2.1"
 playServicesLocation = "21.3.0"
 rxandroid = "3.0.2"
 rxjava = "3.1.5"
+paging = "3.3.4"
+viewpager2 = "1.1.0"
+room = "2.6.1"
+firebase-bom = "33.6.0"
+osmdroid = "6.1.10"
+osmbonuspack = "6.7.0"
+
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -38,6 +45,17 @@ androidx-preference = { group = "androidx.preference", name = "preference", vers
 play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 rxandroid = { module = "io.reactivex.rxjava3:rxandroid", version.ref = "rxandroid" }
 rxjava = { module = "io.reactivex.rxjava3:rxjava", version.ref = "rxjava" }
+paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+paging-rxjava3 = { group = "androidx.paging", name = "paging-rxjava3", version.ref = "paging" }
+viewpager2 = { group ="androidx.viewpager2", name = "viewpager2", version.ref = "viewpager2"}
+room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+room-rxjava3 = { group = "androidx.room", name = "room-rxjava3", version.ref = "room" }
+room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebase-bom" }
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth"}
+osmdroid-android = { group = "org.osmdroid", name = "osmdroid-android", version.ref = "osmdroid" }
+osmbonuspack = { group = "com.github.MKergall", name = "osmbonuspack", version.ref = "osmbonuspack" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

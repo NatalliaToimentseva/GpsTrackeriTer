@@ -5,8 +5,10 @@
     <dimen name="dm_5">5dp</dimen>
     <dimen name="dm_10">10dp</dimen>
     <dimen name="dm_15">15dp</dimen>
+    <dimen name="dm_25">25dp</dimen>
     <dimen name="dm_50">50dp</dimen>
     <dimen name="sp_18">18sp</dimen>
     <dimen name="sp_24">24sp</dimen>
+    <dimen name="sp_70">70sp</dimen>
 
 </resources>

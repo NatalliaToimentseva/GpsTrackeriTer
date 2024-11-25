@@ -42,6 +42,8 @@ import java.time.LocalDate
 
 const val OSM_MAP_PREFERENCES = "osm_pref"
 const val SCHEME = "package"
+const val DEFAULT_ZOOM = 20.0
+const val DEFAULT_LINE_WIDTH = 15.0f
 
 class HomeFragment : Fragment() {
 
@@ -149,7 +151,8 @@ class HomeFragment : Fragment() {
                     COLOR_PREFERENCE_KEY, DEFAULT_ROUTE_COLOR
                 )
             )
-            map.controller.setZoom(20.0)
+            polyline?.outlinePaint?.strokeWidth = DEFAULT_LINE_WIDTH
+            map.controller.setZoom(DEFAULT_ZOOM)
             val myLocationProvider = GpsMyLocationProvider(requireContext())
             myLocationOverlay = MyLocationNewOverlay(myLocationProvider, map).apply {
                 enableMyLocation()

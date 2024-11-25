@@ -12,6 +12,8 @@ import androidx.preference.PreferenceManager
 import com.iTergt.routgpstracker.R
 import com.iTergt.routgpstracker.databinding.FragmentRouteDetailsBinding
 import com.iTergt.routgpstracker.repository.SharedPreferencesRepository
+import com.iTergt.routgpstracker.ui.tabs.home.DEFAULT_LINE_WIDTH
+import com.iTergt.routgpstracker.ui.tabs.home.DEFAULT_ZOOM
 import com.iTergt.routgpstracker.ui.tabs.home.OSM_MAP_PREFERENCES
 import com.iTergt.routgpstracker.ui.tabs.routes.ROUTE_DETAILS_ARGS_KEY
 import com.iTergt.routgpstracker.ui.tabs.settings.COLOR_PREFERENCE_KEY
@@ -113,6 +115,7 @@ class RouteDetailsFragment : Fragment() {
                     PreferenceManager.getDefaultSharedPreferences(requireContext())
                         .getString(COLOR_PREFERENCE_KEY, DEFAULT_ROUTE_COLOR)
                 )
+                polyline.outlinePaint?.strokeWidth = DEFAULT_LINE_WIDTH
                 detailsMap.overlays.add(polyline)
                 polyline.setPoints(geoPointsConvertFromString(route.geoPoints))
 
@@ -145,7 +148,7 @@ class RouteDetailsFragment : Fragment() {
      */
     private fun goToStartPosition(startGeoPoint: GeoPoint) {
         binding?.detailsMap?.controller?.run {
-            zoomTo(18.0) // Set the zoom level
+            zoomTo(DEFAULT_ZOOM) // Set the zoom level
             animateTo(startGeoPoint) // Animate to the starting point
         }
     }
@@ -162,6 +165,11 @@ class RouteDetailsFragment : Fragment() {
                 val startMarker = Marker(detailsMap).apply {
                     setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
                     position = geoPoints[0] // Set position to the starting point
+                    icon = ResourcesCompat.getDrawable(
+                        resources,
+                        R.drawable.ic_start,
+                        null
+                    ) // Set start icon
                 }
 
                 // Create and configure the finish marker
