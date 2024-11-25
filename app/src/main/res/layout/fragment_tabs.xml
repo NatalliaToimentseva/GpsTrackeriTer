@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/authorization_bg"
+    android:background="@color/neutral_lite_green"
     tools:context=".ui.tabs.TabsFragment">
 
     <androidx.fragment.app.FragmentContainerView
@@ -23,7 +23,7 @@
         android:id="@+id/navBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background"
+        android:background="@color/neutral_lite_green"
         app:itemActiveIndicatorStyle="@android:color/transparent"
         app:itemIconTint="@color/bottom_menu_icons_colors"
         app:labelVisibilityMode="unlabeled"

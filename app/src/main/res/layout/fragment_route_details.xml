@@ -18,16 +18,13 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_show_route"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dm_10"
+        style="@style/FloatingActionButtonStyle"
         android:layout_marginEnd="@dimen/dm_10"
-        android:backgroundTint="@color/indigo"
         android:contentDescription="@string/btn_show_route"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_route"
-        app:tint="@color/amber" />
+        app:tint="@color/dark_green" />
 
     <TextView
         android:id="@+id/tv_details_date"

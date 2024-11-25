@@ -5,23 +5,24 @@
     <color name="lite_white">#B9FFFFFF</color>
     <color name="transparent_white">#32FFFFFF</color>
     <color name="mint">#84E2D9</color>
-    <color name="mint_dark">#E7369488</color>
-    <color name="blue">#15B3FB</color>
-    <color name="blue_dark">#1784DC</color>
-    <color name="graphite">#494747</color>
-    <color name="background">#263F51B5</color>
-    <color name="mintL">#98AAF2E8</color>
-    <color name="mintD">#292196F3</color>
-    <color name="yellow">#EBE8B3</color>
-
-    <color name="indigo">#3f51b5</color>
-    <color name="dark_indigo">#303f9f</color>
     <color name="lime">#cddc39</color>
-    <color name="blue_gray">#607d8b</color>
-    <color name="dark_white">#C5CAE9</color>
-    <color name="middle_white">#FFFFFF</color>
     <color name="error">#FF5722</color>
-    <color name="amber">#FFC107</color>
-    <color name="amber_transparent">#56FFC107</color>
+
+    <color name="lite_green">#F6FCDF</color>
+    <color name="secondary_green">#859F3D</color>
+    <color name="medium_green">#31511E</color>
+    <color name="dark_green">#1A1A19</color>
+
+    <color name="neutral_lite_green">#E1F0DA</color>
+    <color name="neutral_secondary_green">#D4E7C5</color>
+    <color name="neutral_medium_green">#BFD8AF</color>
+    <color name="neutral_dark_green">#99BC85</color>
+
+    <color name="neutral_lite_pink">#E7CBCB</color>
+    <color name="neutral_secondary_pink">#C88EA7</color>
+    <color name="neutral_medium_pink">#99627A</color>
+    <color name="neutral_dark_pink">#643843</color>
+    <color name="transparent_brith_pink">#67BF3131</color>
+    <color name="brith_pink">#BF3131</color>
 
 </resources>

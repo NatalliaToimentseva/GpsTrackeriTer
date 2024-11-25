@@ -15,14 +15,11 @@ import java.util.Timer
 import java.util.TimerTask
 
 const val START_TIME = "00:00:00"
-const val START_SPEED = "0"
-const val START_AVERAGE_SPEED = "0"
-const val START_DISTANCE = "0"
 private const val TIMER_DELAY = 1000L
 private const val TIMER_PERIOD = 1000L
 
 class HomeViewModel(
-    locationController: LocationController,
+    private val locationController: LocationController,
     private val saveRouteUseCase: SaveRouteUseCase
 ) : ViewModel() {
 
@@ -83,6 +80,10 @@ class HomeViewModel(
 
     fun setShowDialog(isShow: Boolean) {
         _isShowDialog.value = isShow
+        if (!isShow) {
+            _timePassed.value = START_TIME
+            locationController.locationData.onNext(LocationModel()) // Clear data in controller
+        }
     }
 
     fun startTimer() {
@@ -115,15 +116,6 @@ class HomeViewModel(
                         }
                     }
                 )
-        )
-    }
-
-    fun resetLocation() {
-        _locationData.value = LocationModel(
-            START_SPEED,
-            START_AVERAGE_SPEED,
-            START_DISTANCE,
-            arrayListOf()
         )
     }
 

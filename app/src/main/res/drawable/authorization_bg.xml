@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:layout_height="wrap_content">
-            <solid android:color="@color/indigo" />
+            <solid android:color="@color/neutral_secondary_green" />
         </shape>
     </item>
     <item>
@@ -21,9 +21,9 @@
             <gradient
                 android:centerX="0.8"
                 android:centerY="0.5"
-                android:endColor="@color/mintL"
+                android:endColor="@color/neutral_lite_green"
                 android:gradientRadius="70%"
-                android:startColor="@color/indigo"
+                android:startColor="@color/neutral_lite_green"
                 android:type="radial" />
         </shape>
     </item>
@@ -34,7 +34,7 @@
                 android:centerY="0.2"
                 android:endColor="@android:color/transparent"
                 android:gradientRadius="80%"
-                android:startColor="@color/mintL"
+                android:startColor="@color/lite_green"
                 android:type="radial" />
         </shape>
     </item>
@@ -43,7 +43,7 @@
             <gradient
                 android:centerX="0.5"
                 android:centerY="0.5"
-                android:endColor="@color/indigo"
+                android:endColor="@color/neutral_medium_green"
                 android:gradientRadius="100%"
                 android:startColor="@android:color/transparent"
                 android:type="radial" />

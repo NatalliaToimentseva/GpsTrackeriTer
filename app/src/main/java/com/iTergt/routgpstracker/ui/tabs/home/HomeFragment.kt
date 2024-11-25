@@ -259,7 +259,6 @@ class HomeFragment : Fragment() {
                 LocationService::class.java
             )
         )
-        viewModel.resetLocation()
         viewModel.setIsServiceRunning(true)
         viewModel.startTimer()
         binding?.btnStartStop?.setImageResource(R.drawable.btn_stop)
