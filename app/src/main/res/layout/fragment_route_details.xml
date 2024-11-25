@@ -22,11 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dm_10"
         android:layout_marginEnd="@dimen/dm_10"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/indigo"
         android:contentDescription="@string/btn_show_route"
-        android:src="@drawable/ic_route"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_route"
+        app:tint="@color/amber" />
 
     <TextView
         android:id="@+id/tv_details_date"

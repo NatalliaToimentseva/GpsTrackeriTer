@@ -22,22 +22,24 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dm_10"
         android:layout_marginEnd="@dimen/dm_10"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/indigo"
         android:contentDescription="@string/btn_my_location"
-        android:src="@drawable/ic_location"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_location"
+        app:tint="@color/amber" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btn_start_stop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/dm_10"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@color/indigo"
         android:contentDescription="@string/btn_control_route"
-        android:src="@drawable/btn_start"
         app:layout_constraintStart_toStartOf="@+id/btn_current_location"
-        app:layout_constraintTop_toBottomOf="@+id/btn_current_location" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_current_location"
+        app:srcCompat="@drawable/btn_start"
+        app:tint="@color/amber" />
 
     <TextView
         android:id="@+id/tv_time"
