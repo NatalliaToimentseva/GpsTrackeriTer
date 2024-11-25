@@ -16,7 +16,6 @@ import android.view.ViewGroup
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.preference.PreferenceManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -209,11 +208,10 @@ class HomeFragment : Fragment() {
                     binding?.map?.snackbarWithListener(
                         resources.getString(R.string.snackbar_gps_message),
                         resources.getString(R.string.snackbar_gps_action),
-                    ) {
-                        ContextCompat.startActivity(
-                            requireContext(),
-                            Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS),
-                            null
+
+                        ) {
+                        requireContext().startActivity(
+                            Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                         )
                     }
                 }
@@ -242,12 +240,12 @@ class HomeFragment : Fragment() {
             .setTitle(resources.getString(R.string.request_permission_title))
             .setMessage(resources.getString(R.string.request_permission_message))
             .setPositiveButton(getString(R.string.positive_button)) { _, _ ->
-                val intent = Intent(
-                    Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-                    Uri.fromParts(SCHEME, requireContext().packageName, null)
+                requireContext().startActivity(
+                    Intent(
+                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                        Uri.fromParts(SCHEME, requireContext().packageName, null)
+                    )
                 )
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                ContextCompat.startActivity(requireContext(), intent, null)
             }
             .setNegativeButton(getString(R.string.negative_button)) { _, _ -> }
             .create()
