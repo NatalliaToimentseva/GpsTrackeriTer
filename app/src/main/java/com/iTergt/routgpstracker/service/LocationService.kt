@@ -52,7 +52,7 @@ class LocationService : Service() {
     private var locationRequest: LocationRequest? = null // Location request configuration
     private var locationCallback: LocationCallback? = null // Callback for location updates
 
-    private var lastLocation: Location? = null // Last known location
+    private var lastKnownLocation: Location? = null // Last known location
     private var distance = START_DISTANCE // Total distance traveled
 
     private var isDebug = true // Flag for enabling debug mode (for development purposes)
@@ -118,10 +118,12 @@ class LocationService : Service() {
             @SuppressLint("DefaultLocale")
             override fun onLocationResult(result: LocationResult) {
                 super.onLocationResult(result)
-                if (lastLocation != null) {
-                    result.lastLocation?.let { location ->
+                if (lastKnownLocation != null) {
+                    val loc = result.locations.last()
+                    loc.speed
+                    result.locations.lastOrNull()?.let { location ->
                         if (location.speed > MIN_SPEED_TO_DETECT_MOVING || isDebug) { // Only process if moving or in debug mode
-                            lastLocation?.run {
+                            lastKnownLocation?.run {
                                 distance += distanceTo(location) // Calculate distance traveled
                             }
                             geoPoints.add(
@@ -148,7 +150,7 @@ class LocationService : Service() {
                         locationController.locationData.onNext(locationModel) // Send location data
                     }
                 }
-                lastLocation = result.lastLocation // Update last known location
+                lastKnownLocation = result.lastLocation // Update last known location
             }
         }
     }
