@@ -26,14 +26,14 @@
         <item name="android:layout_marginVertical">@dimen/dm_5</item>
         <item name="android:textColorHint">@color/items_hint_color</item>
         <item name="hintTextColor">@color/items_hint_color</item>
-        <item name="cursorColor">@color/secondary_green</item>
+        <item name="cursorColor">@color/khaki_medium</item>
     </style>
 
     <style name="LogoTextViewStyle">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:fontFamily">@font/kaushan_script_regular</item>
-        <item name="android:textColor">@color/brith_pink</item>
+        <item name="android:textColor">@color/khaki_medium</item>
         <item name="android:textSize">@dimen/sp_70</item>
         <item name="android:textStyle">bold</item>
     </style>
@@ -42,10 +42,11 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginHorizontal">@dimen/dm_50</item>
-        <item name="android:layout_marginTop">@dimen/dm_25</item>
+        <item name="android:layout_marginTop">@dimen/dm_10</item>
         <item name="android:enabled">false</item>
         <item name="android:backgroundTint">@color/button_color_bg</item>
         <item name="android:padding">@dimen/dm_15</item>
+        <item name="cornerRadius">@dimen/dm_5</item>
         <item name="android:textColor">@color/button_text_colors</item>
     </style>
 
@@ -53,7 +54,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">@dimen/dm_10</item>
-        <item name="android:backgroundTint">@color/neutral_lite_pink</item>
+        <item name="android:backgroundTint">@color/khaki</item>
     </style>
 
 </resources>

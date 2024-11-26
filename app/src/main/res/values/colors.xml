@@ -8,21 +8,13 @@
     <color name="lime">#cddc39</color>
     <color name="error">#FF5722</color>
 
-    <color name="lite_green">#F6FCDF</color>
-    <color name="secondary_green">#859F3D</color>
-    <color name="medium_green">#31511E</color>
     <color name="dark_green">#1A1A19</color>
-
-    <color name="neutral_lite_green">#E1F0DA</color>
-    <color name="neutral_secondary_green">#D4E7C5</color>
-    <color name="neutral_medium_green">#BFD8AF</color>
-    <color name="neutral_dark_green">#99BC85</color>
-
-    <color name="neutral_lite_pink">#E7CBCB</color>
-    <color name="neutral_secondary_pink">#C88EA7</color>
-    <color name="neutral_medium_pink">#99627A</color>
-    <color name="neutral_dark_pink">#643843</color>
-    <color name="transparent_brith_pink">#67BF3131</color>
-    <color name="brith_pink">#BF3131</color>
+    <color name="khaki">#78866b</color>
+    <color name="khaki_lite">#96a08d</color>
+    <color name="khaki_medium">#788968</color>
+    <color name="khaki_dark">#78866b</color>
+    <color name="khaki_grey">#797979</color>
+    <color name="beige_lite">#f0ede6</color>
+    <color name="beige">#f5f5dc</color>
 
 </resources>

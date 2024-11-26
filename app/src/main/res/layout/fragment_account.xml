@@ -11,10 +11,10 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/medium_green"
+        android:backgroundTint="@color/khaki"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:tabIndicatorColor="@color/neutral_lite_pink"
+        app:tabIndicatorColor="@color/khaki_lite"
         app:tabIndicatorFullWidth="true"
         app:tabMode="fixed"
         app:tabTextColor="@color/tabs_items_colors" />
