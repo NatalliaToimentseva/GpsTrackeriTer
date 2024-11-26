@@ -1,5 +1,6 @@
 package com.iTergt.routgpstracker.ui.tabs.settings
 
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import androidx.preference.Preference
@@ -7,7 +8,10 @@ import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.PreferenceFragmentCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.iTergt.routgpstracker.R
+import com.iTergt.routgpstracker.controllers.LocationController
+import com.iTergt.routgpstracker.models.LocationModel
 import com.iTergt.routgpstracker.repository.SharedPreferencesRepository
+import com.iTergt.routgpstracker.service.LocationService
 import com.iTergt.routgpstracker.utils.findTopNavController
 import org.koin.android.ext.android.inject
 
@@ -22,6 +26,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private val sharedPreference: SharedPreferencesRepository by inject()
     private val firebaseAuth: FirebaseAuth by inject()
+    private val locationController: LocationController by inject()
     private var timePref: Preference? = null
     private var colorPref: Preference? = null
     private var logoutPreference: Preference? = null
@@ -86,6 +91,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
         firebaseAuth.signOut()
         sharedPreference.setLoggedIn(false)
         sharedPreference.clearUserData()
+        requireContext().stopService(Intent(requireContext(), LocationService::class.java))
+        locationController.locationData.onNext(LocationModel())
         findTopNavController().popBackStack()
         findTopNavController().navigate(R.id.accountFragment)
     }
